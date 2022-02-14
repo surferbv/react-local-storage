@@ -1,23 +1,49 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useEffect, useState} from 'react';
 
 function App() {
+  
+  // Gets the count value and converts it to a string 
+  const storedCountAsNumber = Number( localStorage.getItem( "count" )  );
+  
+  const [count, setCount] = useState(
+
+    Number.isInteger(storedCountAsNumber) ? storedCountAsNumber : 0
+
+  );
+
+  // Sets local storage counts value to the key count
+  useEffect(() => {
+
+    console.log("Set local storage count value");
+
+    window.localStorage.setItem('count', count);
+
+  }, [count]);
+
+
+  const increaseCount = (e) => {
+
+    return setCount( count + 1 );
+
+  };
+
+
+  const decreaseCount = (e) => {
+
+    return setCount( count - 1 );
+     
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      <h1> Count {count} </h1>
+
+      <button onClick={increaseCount}>+</button>
+
+      <button onClick={decreaseCount}>-</button>
+
     </div>
   );
 }
